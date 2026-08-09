@@ -1,0 +1,22 @@
+{
+  "name": "learn-threejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "three": "^0.185.1",
+    "vite": "^8.2.1"
+  },
+  "allowScripts": {
+    "fsevents@2.3.3": true
+  }
+}
