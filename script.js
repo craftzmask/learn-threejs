@@ -48,30 +48,32 @@ group.scale.y = 2;
 group.rotation.y = 0.2;
 scene.add(group);
 
-const cube1 = new THREE.Mesh(
-	new THREE.BoxGeometry(1, 1, 1),
-	new THREE.MeshBasicMaterial({ color: 0xff0000 })
-);
-cube1.position.x = -1.5;
-group.add(cube1);
-
-const cube2 = new THREE.Mesh(
-	new THREE.BoxGeometry(1, 1, 1),
-	new THREE.MeshBasicMaterial({ color: 0xff0000 })
-);
-cube2.position.x = 0;
-group.add(cube2);
-
-const cube3 = new THREE.Mesh(
-	new THREE.BoxGeometry(1, 1, 1),
-	new THREE.MeshBasicMaterial({ color: 0xff0000 })
-);
-cube3.position.x = 1.5;
-group.add(cube3);
-
 // Render
 const renderer = new THREE.WebGLRenderer({
 	canvas
 });
 renderer.setSize(sizes.width, sizes.height);
-renderer.render(scene, camera);
+
+/**
+ * Animation
+ */
+const clock = new THREE.Clock();
+
+const tick = () => {
+	const elapsedTime = clock.getElapsedTime();
+
+	mesh.rotation.y = elapsedTime;
+	mesh.position.x = Math.cos(elapsedTime);
+	mesh.position.y = Math.sin(elapsedTime);
+
+	camera.position.x = Math.cos(elapsedTime);
+	camera.position.y = Math.sin(elapsedTime);
+
+	camera.lookAt(mesh.position);
+
+	renderer.render(scene, camera);
+
+	window.requestAnimationFrame(tick);
+}
+
+tick();
