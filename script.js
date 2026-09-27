@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import gsap from 'gsap';
 
 /**
  * We need 4 elements to get started:
@@ -57,19 +58,21 @@ renderer.setSize(sizes.width, sizes.height);
 /**
  * Animation
  */
-const clock = new THREE.Clock();
+// const clock = new THREE.Clock();
+
+gsap.to(mesh.position, { duration: 1, delay: 1, x: 2 });
 
 const tick = () => {
-	const elapsedTime = clock.getElapsedTime();
+	// const elapsedTime = clock.getElapsedTime();
 
-	mesh.rotation.y = elapsedTime;
-	mesh.position.x = Math.cos(elapsedTime);
-	mesh.position.y = Math.sin(elapsedTime);
+	// mesh.rotation.y = elapsedTime;
+	// mesh.position.x = Math.cos(elapsedTime);
+	// mesh.position.y = Math.sin(elapsedTime);
 
-	camera.position.x = Math.cos(elapsedTime);
-	camera.position.y = Math.sin(elapsedTime);
+	// camera.position.x = Math.cos(elapsedTime);
+	// camera.position.y = Math.sin(elapsedTime);
 
-	camera.lookAt(mesh.position);
+	// camera.lookAt(mesh.position);
 
 	renderer.render(scene, camera);
 
