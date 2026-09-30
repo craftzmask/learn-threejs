@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import gsap from 'gsap';
 
 /**
  * We need 4 elements to get started:
@@ -15,18 +14,10 @@ const canvas = document.querySelector('canvas.webgl');
 // Scene
 const scene = new THREE.Scene();
 
-/**
- * Axes Helper
- */
-const axesHelper = new THREE.AxesHelper(2);
-scene.add(axesHelper);
-
 // Create Mesh (geometry + material) aka (shape + how it looks)
 const geometry = new THREE.BoxGeometry(1, 1, 1);
 const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
 const mesh = new THREE.Mesh(geometry, material);
-
-// Now we can add to scene
 scene.add(mesh);
 
 // Create camera
@@ -35,44 +26,28 @@ const sizes = {
 	height: 600
 };
 
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
-camera.position.z = 4;
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
+camera.position.x = 2;
+camera.position.y = 2;
+camera.position.z = 2;
+camera.lookAt(mesh.position);
 scene.add(camera);
 
-camera.lookAt(new THREE.Vector3(0, -1, 0));
-
-/**
- * Objects
- */
-const group = new THREE.Group();
-group.scale.y = 2;
-group.rotation.y = 0.2;
-scene.add(group);
-
 // Render
-const renderer = new THREE.WebGLRenderer({
-	canvas
-});
+const renderer = new THREE.WebGLRenderer({ canvas });
 renderer.setSize(sizes.width, sizes.height);
 
 /**
  * Animation
  */
-// const clock = new THREE.Clock();
-
-gsap.to(mesh.position, { duration: 1, delay: 1, x: 2 });
+const timer = new THREE.Timer();
 
 const tick = () => {
-	// const elapsedTime = clock.getElapsedTime();
-
-	// mesh.rotation.y = elapsedTime;
-	// mesh.position.x = Math.cos(elapsedTime);
-	// mesh.position.y = Math.sin(elapsedTime);
-
-	// camera.position.x = Math.cos(elapsedTime);
-	// camera.position.y = Math.sin(elapsedTime);
-
-	// camera.lookAt(mesh.position);
+	timer.update();
+	const ellapsedTime = timer.getElapsed();
+	
+	mesh.rotation.x = ellapsedTime;
+	mesh.rotation.y = ellapsedTime;
 
 	renderer.render(scene, camera);
 
