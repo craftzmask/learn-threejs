@@ -13,11 +13,13 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "gsap": "^3.15.0",
     "three": "^0.185.1",
     "vite": "^8.2.1"
   },
   "allowScripts": {
     "fsevents@2.3.3": true
+  },
+  "devDependencies": {
+    "@types/three": "^0.186.0"
   }
 }
