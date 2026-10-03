@@ -15,27 +15,35 @@ const canvas = document.querySelector('canvas.webgl');
 const scene = new THREE.Scene();
 
 // Create Mesh (geometry + material) aka (shape + how it looks)
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-const mesh = new THREE.Mesh(geometry, material);
-scene.add(mesh);
+const createMesh = (width, height, depth, color) => {
+	const geometry = new THREE.BoxGeometry(width, height, depth);
+	const material = new THREE.MeshBasicMaterial({ color });
+	return new THREE.Mesh(geometry, material);
+}
+
+const meshes = [
+	createMesh(2, 2, 2, 0xff0000),
+	createMesh(1, 3, 1, 0x0000ff),
+	createMesh(3, 1, 1, 0x0000ff),
+	createMesh(1, 1, 3, 0x0000ff),
+]
+
+for (const mesh of meshes) {
+	scene.add(mesh);
+}
+
+
+const canvasSizes = { width: 800, height: 600 };
 
 // Create camera
-const sizes = {
-	width: 800,
-	height: 600
-};
-
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
-camera.position.x = 2;
-camera.position.y = 2;
-camera.position.z = 2;
-camera.lookAt(mesh.position);
+const camera = new THREE.PerspectiveCamera(75, canvasSizes.width / canvasSizes.height, 1, 100);
+camera.position.set(3, 3, 3);
+camera.lookAt(meshes[0].position);
 scene.add(camera);
 
 // Render
 const renderer = new THREE.WebGLRenderer({ canvas });
-renderer.setSize(sizes.width, sizes.height);
+renderer.setSize(canvasSizes.width, canvasSizes.height);
 
 /**
  * Animation
@@ -45,9 +53,11 @@ const timer = new THREE.Timer();
 const tick = () => {
 	timer.update();
 	const ellapsedTime = timer.getElapsed();
-	
-	mesh.rotation.x = ellapsedTime;
-	mesh.rotation.y = ellapsedTime;
+
+	for (const mesh of meshes) {
+		mesh.rotation.x = ellapsedTime;
+		mesh.rotation.y = ellapsedTime;
+	}
 
 	renderer.render(scene, camera);
 
